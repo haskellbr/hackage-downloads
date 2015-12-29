@@ -20,5 +20,10 @@ data PackageDownloads = PackageDownloads { packageName      :: String
                                          }
   deriving(Show)
 
-deriveJSON defaultOptions { fieldLabelModifier = map toLower . drop (length "package")
-                          } ''PackageDownloads
+deriveJSON defaultOptions
+    { fieldLabelModifier = map toLower . drop (length "package")
+    } ''PackageDownloads
+
+scrapePackageDownloads :: IO (Maybe [PackageDownloads])
+scrapePackageDownloads =
+    scrapeURL "http://hackage.haskell.org/packages/top" packageDownloadsScraper
