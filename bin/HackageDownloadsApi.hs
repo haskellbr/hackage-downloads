@@ -1,5 +1,5 @@
 {-# LANGUAGE OverloadedStrings #-}
-module M  Spock-workerain where
+module Main where
 
 import           Control.Concurrent
 import           Control.Concurrent.STM
