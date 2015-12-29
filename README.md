@@ -1,5 +1,8 @@
 hackage-downloads
 =================
+[![Build Status](https://travis-ci.org/haskellbr/hackage-downloads.svg?branch=master)](https://travis-ci.org/haskellbr/hackage-downloads)
+[![Docker Pulls](https://img.shields.io/docker/pulls/haskellbr/hackage-downloads.svg)](https://hub.docker.com/r/haskellbr/hackage-downloads/)
+- - -
 A little script that pulls Hackage download counts and exposes them as JSON.
 
 ## Command-line
