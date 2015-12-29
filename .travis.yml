@@ -1,1 +1,50 @@
-language: haskell
+# Use new container infrastructure to enable caching
+sudo: false
+
+# Choose a lightweight base image; we provide our own build tools.
+language: c
+
+# GHC depends on GMP. You can add other dependencies here as well.
+addons:
+  apt:
+    packages:
+    - libgmp-dev
+
+before_install:
+# Download and unpack the stack executable
+- mkdir -p ~/.local/bin
+- export PATH=$HOME/.local/bin:$PATH
+- travis_retry curl -L https://www.stackage.org/stack/linux-x86_64 | tar xz --wildcards --strip-components=1 -C ~/.local/bin '*/stack'
+
+# This line does all of the work: installs GHC if necessary, build the library,
+# executables, and test suites, and runs the test suites. --no-terminal works
+# around some quirks in Travis's terminal implementation.
+script:
+- stack init
+- stack --no-terminal --install-ghc build
+
+# Prepare the upload to S3
+- mkdir -p to-travis
+- cp $(stack exec which hackage-downloads) to-travis
+- bzip2 to-travis/hackage-downloads
+
+# Caching so the next build will be fast too.
+cache:
+  directories:
+  - $HOME/.stack
+
+# Upload the resulting executable to S3
+deploy:
+  provider: s3
+  access_key_id: "AKIAJP7VW4B2IVAP5X4Q"
+  secret_access_key:
+    secure: "KeoM+cD6Lk0SAfIrf98q96p3dDIdfExBVyc2MO0M4IFnZ5m2/pUvKccNn7WvepIxSqwKYRAcCNriSMWucLbCuRXfriZl4oD6eA8n4HidjIu3ubJTx/QCYGwzN0LnHlae0KULkUg8bHtMj8qoXSSn3tkElivQqRa8h3DupmyqHQMjEc2T2CPyjvyWP9FROjdOzwGFxIUDuM/Az3ZoiTshGEPoYR09mD3sjxN4ogRHnNK58dSko9csueXbUL6WZ3v0EVeYPcOPIgtBwD3JbgZyOXDYfxX2qSwJTp7++nEJozEjOkal1Xrj80T3LtgDG/BEv1iuoXjxXS/HIFm3l4DbFxjHvcREn6iPDInLyM/QJB0HL7XG8TuBQpupBcMkUUbNxum/ktPQz2oocbnvTZ7H25wBMKWye+ZN9xlDeiHB/vwoZa8K+KIHCssiFDX4hkeageNwYB2u5mCIHDPVZEPFrQicjTmdUVJYvu2E+g9P4ENK62+D3uB/AmKeNI1ZlUiKg8SKL8B2ZCbC42SXlsEpmnMy0P3pRJQv6CRX6uD8k+F+XwdNheDTJzKxFKQN0qyhKj85Stawg/atG2VIfZPnDKVI6OySu+ygmDMPRLmA6vAnFMvGtmGsQe4uLTCrbhelGMYfyBnnfM9SxX6Ca3mwP6WXtEYWvvzc15uCfVPPL5c="
+  bucket: haskellbr.com
+  acl: public_read
+  region: sa-east-1
+  skip_cleanup: true
+  local_dir: to-travis
+  upload-dir: hackage-downloads
+  on:
+    repo: haskellbr/hackage-downloads
+    branch: master
