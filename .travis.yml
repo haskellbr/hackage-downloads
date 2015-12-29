@@ -26,7 +26,9 @@ script:
 # Prepare the upload to S3
 - mkdir -p to-travis
 - cp $(stack exec which hackage-downloads) to-travis
+- cp $(stack exec which hackage-downloads-api) to-travis
 - bzip2 to-travis/hackage-downloads
+- bzip2 to-travis/hackage-downloads-api
 
 # Caching so the next build will be fast too.
 cache:
