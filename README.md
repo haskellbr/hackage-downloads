@@ -28,6 +28,13 @@ $ curl -L -s localhost:3000
 ]
 ```
 
+## Binary Distribution
+You can download binary distributions for both these executables for Linux
+64-bits from S3 which are built and uploaded by the CI system from these links:
+
+- [`hackage-downloads`](http://haskellbr.com.s3-website-sa-east-1.amazonaws.com/hackage-downloads/hackage-downloads.bz2 > hackage-downloads.bz2)
+- [`hackage-downloads-api`](http://haskellbr.com.s3-website-sa-east-1.amazonaws.com/hackage-downloads/hackage-downloads-api.bz2 > hackage-downloads-api.bz2)
+
 ## License
 This code is licensed under the MIT license. For more information please refer
 to the [LICENSE](/LICENSE) file.
