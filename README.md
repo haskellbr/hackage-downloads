@@ -46,6 +46,8 @@ $ curl `docker-machine ip default`:3000
 # ...
 ```
 
+At the moment the image is based on Ubuntu and rather large.
+
 ## License
 This code is licensed under the MIT license. For more information please refer
 to the [LICENSE](/LICENSE) file.
