@@ -35,6 +35,17 @@ You can download binary distributions for both these executables for Linux
 - [`hackage-downloads`](http://haskellbr.com.s3-website-sa-east-1.amazonaws.com/hackage-downloads/hackage-downloads.bz2 > hackage-downloads.bz2)
 - [`hackage-downloads-api`](http://haskellbr.com.s3-website-sa-east-1.amazonaws.com/hackage-downloads/hackage-downloads-api.bz2 > hackage-downloads-api.bz2)
 
+## Docker Distribution
+The repository has a `Makefile` which offers a simple way of creating and
+publishing a Docker image for both executables (though mostly meant to run the
+web service), which should be available [here](https://hub.docker.com/r/haskellbr/hackage-downloads/).
+
+```bash
+$ docker run -d -it -p 3000:3000 haskellbr/hackage-downloads
+$ curl `docker-machine ip default`:3000
+# ...
+```
+
 ## License
 This code is licensed under the MIT license. For more information please refer
 to the [LICENSE](/LICENSE) file.
