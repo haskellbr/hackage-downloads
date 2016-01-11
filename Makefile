@@ -1,5 +1,6 @@
 docker-image:
 	rm -f hackage-downloads
+	rm -f hackage-downloads-api
 	curl http://haskellbr.com.s3-website-sa-east-1.amazonaws.com/hackage-downloads/hackage-downloads.bz2 > hackage-downloads.bz2
 	curl http://haskellbr.com.s3-website-sa-east-1.amazonaws.com/hackage-downloads/hackage-downloads-api.bz2 > hackage-downloads-api.bz2
 	bzip2 -d hackage-downloads.bz2
