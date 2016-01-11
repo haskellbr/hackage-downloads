@@ -27,6 +27,8 @@ script:
 - mkdir -p to-travis
 - cp $(stack exec which hackage-downloads) to-travis
 - cp $(stack exec which hackage-downloads-api) to-travis
+- tar cvz hackage-downloads-api > to-travis/hackage-downloads-api.tar.gz
+- tar cvz hackage-downloads > to-travis/hackage-downloads.tar.gz
 - bzip2 to-travis/hackage-downloads
 - bzip2 to-travis/hackage-downloads-api
 
