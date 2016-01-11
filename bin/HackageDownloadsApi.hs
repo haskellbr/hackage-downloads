@@ -5,7 +5,9 @@ import           Control.Concurrent
 import           Control.Concurrent.STM
 import           Control.Monad
 import           Control.Monad.IO.Class
+import           Data.Maybe
 import           HackageDownloads
+import           System.Environment
 import           Web.Spock.Safe
 import           Web.Spock.Worker
 
@@ -28,7 +30,8 @@ scraperWorkerHandler = const $ do
 main :: IO ()
 main = do
     st <- newTVarIO []
-    runSpock 3000 $ spock (defaultSpockCfg () PCNoDatabase st) $ do
+    port <- maybe 3000 read <$> lookupEnv "PORT"
+    runSpock port $ spock (defaultSpockCfg () PCNoDatabase st) $ do
         queue <- let cnf = WorkerConfig 1 WorkerNoConcurrency
           in newWorker cnf scraperWorkerHandler onScrapeError
 
